@@ -4,18 +4,16 @@ public class EmployeeWageComputation {
 	
 		public static final int IS_FULL_TIME = 1;
 		public static final int IS_PART_TIME = 2;
-		public static final int EMPLOYEE_RATE_PER_HOURS =20;
-		public static final int NUMBER_OF_WORKING_DAYS = 20;
-		public static final int MAXIMUM_HRS_IN_MONTH = 100;
 	
 		
 		public static void main(String arsg[]) {
 			System.out.println("**Welcome to the employee wage computation program**");
-			computeEmployeeWage();
+			computeEmployeeWage("SoftwareOne", 410, 20, 100);
+			computeEmployeeWage("Infosys", 860, 20, 120);
 		}
 		
 		//creating method
-		public static int computeEmployeeWage() {
+		public static int computeEmployeeWage(String companyName, int employeeRatePerHours, int numberOfWorkingDays, int maximumHoursPerMonth) {
 			
 			//local Variable
 			int employeeHours = 0;
@@ -23,7 +21,7 @@ public class EmployeeWageComputation {
 			int totalWorkingDays = 0;
         
 			//using while loop for iteration
-			while (totalEmployeeHours <= MAXIMUM_HRS_IN_MONTH && totalWorkingDays < NUMBER_OF_WORKING_DAYS) {
+			while (totalEmployeeHours <= maximumHoursPerMonth && totalWorkingDays < numberOfWorkingDays) {
 				totalWorkingDays++;
             
     
@@ -47,8 +45,8 @@ public class EmployeeWageComputation {
 		
 			}
         
-			int totalEmployeeWage = totalEmployeeHours * EMPLOYEE_RATE_PER_HOURS;
-			System.out.println("Total Employee Wage: " + totalEmployeeWage);
+			int totalEmployeeWage = totalEmployeeHours * employeeRatePerHours ;
+			System.out.println("Total Employee Wage for company " + companyName+ " is:" + totalEmployeeWage);
 			return totalEmployeeWage;
 		}
 		
