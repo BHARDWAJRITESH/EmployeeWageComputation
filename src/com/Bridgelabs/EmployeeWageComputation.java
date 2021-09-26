@@ -5,28 +5,32 @@ public class EmployeeWageComputation {
 		public static final int IS_FULL_TIME = 1;
 		public static final int IS_PART_TIME = 2;
 	
-		private final String companyName;
-		private final int employeeRatePerHours;
-		private final int numberOfWorkingDays;
-		private final int maximumHoursPerMonth;
-		private int totalEmployeeWage;
+		private int numberOfCompany = 0;
+		private CompanyEmployeeWage[] companyEmployeeWageArray;
+		
+		public EmployeeWageComputation() {
+			companyEmployeeWageArray = new CompanyEmployeeWage[5];
+		}
 		
 		
-		//creating constructor
-		public EmployeeWageComputation(String companyName, int employeeRatePerHours, int numberOfWorkingDays, int maximumHoursPerMonth) {
+		private void addCompanyEmployeeWage(String companyName, int employeeRatePerHours, int numberOfWorkingDays, int maximumHoursPerMonth) {
+			companyEmployeeWageArray[numberOfCompany] = new CompanyEmployeeWage(companyName, employeeRatePerHours, numberOfWorkingDays, maximumHoursPerMonth);
 			
-			this.companyName = companyName;
-			this.employeeRatePerHours = employeeRatePerHours;
-			this.numberOfWorkingDays = numberOfWorkingDays;
-			this.maximumHoursPerMonth = maximumHoursPerMonth;
+         numberOfCompany++;
 		}
 		
 		public void computeEmployeeWage() {
+			for (int i = 0; i < numberOfCompany; i++) {
+				companyEmployeeWageArray[i].setTotalEmployeeWage(this.computeEmployeeWage(companyEmployeeWageArray[i]));
+				System.out.println(companyEmployeeWageArray[i]);
+			}
+		}
+		private int computeEmployeeWage(CompanyEmployeeWage companyEmployeeWage) {
 			
 			int employeeHours =0, totalEmployeeHours =0, totalWorkingDays = 0;	
 			
 			//using while loop for iteration
-				while (totalEmployeeHours <= maximumHoursPerMonth && totalWorkingDays < numberOfWorkingDays) {
+				while (totalEmployeeHours <= companyEmployeeWage.maximumHoursPerMonth && totalWorkingDays < companyEmployeeWage.numberOfWorkingDays) {
 					totalWorkingDays++;
 					int employeeCheck =(int) Math.floor(Math.random() * 10) % 3;
 				
@@ -47,23 +51,16 @@ public class EmployeeWageComputation {
 				System.out.println("Day#: " + totalWorkingDays + " Employee Daily Working Hour: " +employeeHours);
 		
 				}
-				totalEmployeeWage = totalEmployeeHours * employeeRatePerHours;
+				return totalEmployeeHours * companyEmployeeWage.employeeRatePerHours;
 		}
-		
-			public String toString(){
-			return "Total employee wage for company" +companyName+ " is:" + totalEmployeeWage;
-			}
 			
 			public static void main(String arsg[]) {
 			
 			System.out.println("**********************************************************\nWelcome to the employee wage computation program\n**********************************************************");
-			EmployeeWageComputation softwareOne = new EmployeeWageComputation("SoftwareOne",1100,10,100);
-			EmployeeWageComputation infosys = new EmployeeWageComputation("Infosys",1200,10,100);
-			
-			softwareOne.computeEmployeeWage();
-			System.out.println("*********************************************************\n"+softwareOne+"\n*********************************************************");
-			infosys.computeEmployeeWage();
-			System.out.println("***********************************************************\n"+infosys+"\n***********************************************************");
-			
+			EmployeeWageComputation employeeWageBuilder = new EmployeeWageComputation();
+			employeeWageBuilder.addCompanyEmployeeWage("Infosys",1200,10,100);
+			employeeWageBuilder.addCompanyEmployeeWage("SoftwareOne",1000,10,100);
+			employeeWageBuilder.computeEmployeeWage();
+		
 			}	
 }
